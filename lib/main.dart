@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gojek_app/screens/profile_screen.dart';
 import 'screens/login_screen.dart';
+import '../models/driver.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        if (settings.name == '/profile') {
+          // Mengambil argumen yang dikirim dari pushReplacementNamed
+          var driver = settings.arguments as Driver;
+          return MaterialPageRoute(
+            builder: (context) => ProfileScreen(driver),
+          );
+        }
+        return null;
+      },
     );
   }
 }
